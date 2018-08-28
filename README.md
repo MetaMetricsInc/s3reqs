@@ -46,6 +46,8 @@ Uploading Zip your-reqs.zip to your-bucket bucket.
 ## Download Packages Decorator
 This decorator downloads the packages if and only if packages zip file is not present 
 in the **/tmp/** folder and adds to the **PYTHONPATH**.
+
+**IMPORTANT:** Although the example shown below uses AWS' Chalice framework this will work with any function.
 ```python
 from chalice import Chalice
 from s3reqs.utils import download_packages
