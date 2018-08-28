@@ -4,7 +4,6 @@ from pip._internal import main as _main
 
 import boto3
 import click
-import json
 
 
 s3 = boto3.client('s3')
@@ -15,16 +14,10 @@ class Deploy(object):
     config_path = 's3reqs.json'
     venv = '_venv'
 
-    def __init__(self):
-        config = self.parse_config()
-        self.zip_name = config.get('zip_name')
-        self.requirements_file = config.get('requirements_file')
-        self.bucket = config.get('bucket')
-
-    def parse_config(self):
-        with open(self.config_path, 'r') as f:
-            c = json.load(f)
-        return c
+    def __init__(self,requirements_file,bucket,zip_name):
+        self.zip_name = zip_name
+        self.requirements_file = requirements_file
+        self.bucket = bucket
 
     def install_packages(self):
         """
@@ -32,7 +25,6 @@ class Deploy(object):
         it's reqs to the self.venv
         :return:
         """
-        #If there is no extension name we can assume we are installing loadlamb's requirements
         _main(['install','-r',self.requirements_file,'-t',self.venv])
 
     def remove_zip_venv(self):
@@ -53,8 +45,7 @@ class Deploy(object):
     def publish(self):
         """
         Runs all of the methods required to build the virtualenv folder,
-        create a zip file, upload that zip file to S3, create a SAM
-        template, and deploy that SAM template.
+        create a zip file, upload that zip file to S3
         :return:
         """
         self.create_package()
@@ -66,7 +57,8 @@ class Deploy(object):
         shutil.make_archive(self.zip_name.replace('.zip',''),'zip',self.venv)
 
     def upload_zip(self):
-        print('Uploading Zip {} to {} bucket.'.format(self.zip_name,self.bucket))
+        print('Uploading Zip {} to {} bucket.'.format(self.zip_name,
+                                                      self.bucket))
         s3.upload_file(self.zip_name,self.bucket,self.zip_name)
         return self.bucket, self.zip_name
 
@@ -77,17 +69,11 @@ def s3reqs():
 
 
 @s3reqs.command()
-@click.option('--requirement-file',prompt=True)
-@click.option('--bucket',prompt=True)
-@click.option('--zip-name',prompt=True)
-def init(requirement_file,bucket,zip_name):
-    with open('s3reqs.json','w+') as f:
-        f.write(json.dumps(dict(requirement_file=requirement_file,bucket=bucket,
-                  zip_name=zip_name)))
-
-@s3reqs.command()
-def publish():
-    Deploy().publish()
+@click.argument('requirements_file')
+@click.argument('bucket')
+@click.argument('zip_name')
+def publish(requirements_file,bucket,zip_name):
+    Deploy(requirements_file,bucket,zip_name).publish()
 
 
 if __name__ == '__main__':

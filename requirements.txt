@@ -1,5 +1,4 @@
-oto3>=1.7.84
+boto3>=1.7.84
 click>=6.7
 decorator>=4.3.0
 envs>=1.2.6
-PyYAML>=3.12
