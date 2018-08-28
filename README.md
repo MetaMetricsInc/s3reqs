@@ -62,3 +62,10 @@ app = Chalice(app_name="helloworld")
 def index():
     return {"hello": "world"}
 ```
+
+## Required Environment Variables
+
+### LOCAL_ENV
+**Type:** Boolean
+
+This environment variable basically tells the download_packages decorator whether or not to download the zip file, extract, and add path to the PYTHONPATH.
