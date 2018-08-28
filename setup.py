@@ -9,7 +9,8 @@ def parse_requirements(filename):
 
 setup(
     name='s3reqs',
-    description='A load testing util built to run on AWS Lambda with Kinesis and DynamoDB',
+    description='Uploads zip file to S3 of requirements for Python AWS Lambda '
+                'apps to get around 50MB limit.',
     url='https://github.com/metametricsinc/s3reqs',
     author='Brian Jinwright',
     license='GNU GPL v3',

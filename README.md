@@ -1,6 +1,8 @@
 # s3reqs
 Uploads zip file to S3 of requirements for Python AWS Lambda apps to get around 50MB limit.
 
+## Wait what?
+**From AWS' developer guide for AWS Lambda:** "Each Execution Context provides 500MB of additional disk space in the /tmp directory. The directory content remains when the Execution Context is frozen, providing transient cache that can be used for multiple invocations. You can add extra code to check if the cache has the data that you stored. For information on deployment limits, see AWS Lambda Limits."
 ## Install
 
 ```bash
