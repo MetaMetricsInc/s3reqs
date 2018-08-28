@@ -11,7 +11,7 @@ pip install s3reqs
 ### Publish
 
 ```bash
->>> s3reqs publish
+>>> s3reqs publish s3_reqs.txt your-bucket your-reqs.zip
 Collecting numpy (from -r s3_reqs.txt (line 1))
   Using cached https://files.pythonhosted.org/packages/fe/94/7049fed8373c52839c8cde619acaf2c9b83082b935e5aa8c0fa27a4a8bcc/numpy-1.15.1-cp36-cp36m-manylinux1_x86_64.whl
 Collecting scipy (from -r s3_reqs.txt (line 2))
