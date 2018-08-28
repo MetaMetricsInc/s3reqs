@@ -41,3 +41,20 @@ Successfully installed cycler-0.10.0 kiwisolver-1.0.1 matplotlib-2.2.3 numpy-1.1
 Uploading Zip your-reqs.zip to your-bucket bucket.
 ```
 
+## Download Packages Decorator
+This decorator downloads the packages if and only if packages zip file is not present 
+in the **/tmp/** folder and adds to the **PYTHONPATH**.
+```python
+from chalice import Chalice
+from s3reqs.utils import download_packages
+
+
+app = Chalice(app_name="helloworld")
+
+#In a real app you should probably use environment variables for the  
+#bucket and req_key arguments
+@download_packages('your-bucket','your-reqs.zip')
+@app.route("/")
+def index():
+    return {"hello": "world"}
+```
