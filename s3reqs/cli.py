@@ -76,6 +76,19 @@ def publish(requirements_file,bucket,zip_name):
     Deploy(requirements_file,bucket,zip_name).publish()
 
 
+@s3reqs.command()
+@click.argument('zip_name')
+def delete_reqs(zip_name):
+    try:
+        shutil.rmtree('/tmp/s3reqs/')
+
+    except FileNotFoundError:
+        pass
+    try:
+        os.remove('/tmp/{}'.format(zip_name))
+    except FileNotFoundError:
+        pass
+
 if __name__ == '__main__':
     s3reqs()
 
