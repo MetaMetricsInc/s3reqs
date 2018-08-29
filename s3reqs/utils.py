@@ -18,5 +18,5 @@ def download_packages(bucket=None,req_key=None):
             s3.download_file(bucket, req_key, tmp_file)
             with zipfile.ZipFile(tmp_file,'r') as zip_ref:
                 zip_ref.extractall(tmp_folder)
-            sys.path.insert(0,tmp_folder)
+        sys.path.insert(0,tmp_folder)
 
