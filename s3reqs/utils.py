@@ -3,14 +3,12 @@ import os
 import sys
 import zipfile
 
-from decorator import decorator
 from envs import env
 
 s3 = boto3.client('s3')
 
 
-@decorator
-def download_packages(func,bucket=None,req_key=None,*args,**kwargs):
+def download_packages(bucket=None,req_key=None):
     LOCAL_ENV = env('LOCAL_ENV',True,var_type='boolean')
     if LOCAL_ENV != True:
         tmp_folder = '/tmp/s3reqs/'
@@ -21,5 +19,4 @@ def download_packages(func,bucket=None,req_key=None,*args,**kwargs):
             with zipfile.ZipFile(tmp_file,'r') as zip_ref:
                 zip_ref.extractall(tmp_folder)
             sys.path.insert(0,tmp_folder)
-    return func(*args,**kwargs)
 

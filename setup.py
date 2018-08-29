@@ -18,7 +18,7 @@ setup(
     install_requires=parse_requirements('requirements.txt'),
     packages=find_packages(),
     include_package_data=True,
-    version='0.2.0a',
+    version='0.3.0a',
     entry_points='''
         [console_scripts]
         s3reqs=s3reqs.cli:s3reqs
